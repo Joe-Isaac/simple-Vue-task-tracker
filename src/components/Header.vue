@@ -1,13 +1,15 @@
 <template>
     <header>
         <h1>{{ title }}</h1>
-        <Button text="Add task" colour="green" />
+        <Button @toggle-add-task="$emit('toggle-add-task')"
+         :text="showAddTask ? 'close' : 'add Task'" :colour="showAddTask ? 'red' : 'green'" />
          
     </header>
     
 </template>
 
 <script>
+import { booleanLiteral } from '@babel/types';
 import Button from './Button'
 
 
@@ -15,6 +17,7 @@ export default {
     name: 'Header',
     props: {
         title: String,
+        showAddTask: booleanLiteral,
     },
     components: {
         Button,
