@@ -2,6 +2,7 @@
     <header>
         <h1>{{ title }}</h1>
         <Button text="Add task" colour="green" />
+         
     </header>
     
 </template>
