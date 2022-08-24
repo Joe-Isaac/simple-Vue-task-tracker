@@ -32,7 +32,17 @@ methods: {
   toggleAddTask(){
     this.showAddTask = !this.showAddTask;
   },
-  addTask(task){
+  async addTask(task){
+    console.log(task)
+    await fetch('http://localhost:5000/tasks', {
+      method: 'POST',
+      headers: {
+        'Content-type' : 'application/json',
+        body: JSON.stringify(task)
+      }
+    })
+    .catch(err => alert(err.message)
+    )
     this.tasks = [...this.tasks, task]
   },
 
@@ -45,35 +55,23 @@ methods: {
     }
   },
   toggleReminder(id){
-    this.tasks = this.tasks.map((task) => {
-      task.id === id ? {...task, id:'null'} : console.log('blah')
-    })
+    for(let i=0; i<this.tasks.length; i++){
+      if(this.tasks[i].id === id){
+        this.tasks[i].reminder = !this.tasks[i].reminder;
+      }
+    }
 
-    console.log(this.tasks, "is the value of tasks after op")
+    console.log( id,"is the value of tasks after op")
   },
 },
 
-created(){
-  this.tasks = [
-    {
-      id: 1,
-      text: 'Doctors appointment',
-      day: 'March 1st at 2.30pm',
-      reminder: true,
-    },
-    {
-      id: 2,
-      text: 'Meeting at school',
-      day: 'March 3rd at 11.00am',
-      reminder: true,
-    },
-    {
-      id: 3,
-      text: 'Food shopping',
-      day: 'March 3rd at 1.30pm',
-      reminder: false,
-    },
-  ]
+async created(){
+  this.showAddTask = false;
+  this.tasks = await fetch("http://localhost:5000/tasks")
+  .then(res => res.json())
+  .then(data => {
+    return data
+  })
 }
 }
 
