@@ -10,13 +10,25 @@
       "id": 2,
       "text": "Meeting at school",
       "day": "March 3rd at 11.00am",
-      "reminder": true
+      "reminder": false
     },
     {
       "id": 3,
       "text": "Food shopping",
       "day": "March 3rd at 1.30pm",
+      "reminder": true
+    },
+    {
+      "id": 25867,
+      "text": "Grocery shopping",
+      "day": "March 5th at 11.00am",
       "reminder": false
+    },
+    {
+      "id": 91279,
+      "text": "job hunting",
+      "day": "March 6th at 10.00am",
+      "reminder": true
     }
   ]
 }

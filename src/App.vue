@@ -37,27 +37,54 @@ methods: {
     await fetch('http://localhost:5000/tasks', {
       method: 'POST',
       headers: {
-        'Content-type' : 'application/json',
-        body: JSON.stringify(task)
-      }
+        'Content-type' : 'application/json'
+      },
+      body: JSON.stringify(task)
     })
+    .then(
+      this.tasks = [...this.tasks, task]
+    )
     .catch(err => alert(err.message)
     )
-    this.tasks = [...this.tasks, task]
   },
 
   deleteTask(id){
     if (confirm(' Are you sure?')){
-
       this.tasks = this.tasks.filter((task) => {
           return task.id !== id;
       })
+      fetch('http://localhost:5000/tasks/'+id, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type' : 'application/json'
+        }
+      })
+      .catch(err => {
+        alert('something went wrong, /n', err.message)
+        return;
+    })
     }
   },
+
+
   toggleReminder(id){
     for(let i=0; i<this.tasks.length; i++){
       if(this.tasks[i].id === id){
         this.tasks[i].reminder = !this.tasks[i].reminder;
+        fetch("http://localhost:5000/tasks/"+id, {
+          method: 'PUT',
+          headers:{
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(this.tasks[i]),
+        })
+        .then( data => {
+          console.log(this.tasks[i])
+          alert('Reminder changed successfully')
+        }
+        )
+        .catch(err => 
+        alert(err.message))
       }
     }
 
